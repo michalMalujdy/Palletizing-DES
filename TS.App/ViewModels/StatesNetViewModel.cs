@@ -20,18 +20,7 @@ namespace TS.App.ViewModels
         public int SmallFontSize => 30;
 
         public ICommand SubmitEventCommand { get; set; }
-
-        private string _chosenEventId;
-        public string ChosenEventId
-        {
-            get => _chosenEventId;
-
-            set
-            {
-                _chosenEventId = value;
-                RaisePropertyChanged(nameof(ChosenEventId));
-            }
-        }
+        public string ChosenEventId { get; set; }
 
         public ICollection<string> AvailableEvents => _statesNetService.StatesNet.CurrentState.AvaliableStatesIds.Keys;
 
@@ -40,10 +29,7 @@ namespace TS.App.ViewModels
         public StatesNetViewModel(StatesNetService statesNetService)
         {
             _statesNetService = statesNetService;
-
             SubmitEventCommand = new RelayCommand(SubmitEventButtonClicked);
-
-            ChosenEventId = AvailableEvents.FirstOrDefault();
         }
 
         public void Refresh()
@@ -53,12 +39,18 @@ namespace TS.App.ViewModels
             RaisePropertyChanged(nameof(Sl2Text));
             RaisePropertyChanged(nameof(UpText));
             RaisePropertyChanged(nameof(SvText));
-
-            ChosenEventId = AvailableEvents.FirstOrDefault();
+            RaisePropertyChanged(nameof(AvailableEvents));
         }
 
         private void SubmitEventButtonClicked()
         {
+            if (string.IsNullOrWhiteSpace(ChosenEventId))
+            {
+                //TODO: might show an error that no event is selected
+                return;
+            }
+
+            _statesNetService.AriseEvent(ChosenEventId);
             Refresh();
         }
     }

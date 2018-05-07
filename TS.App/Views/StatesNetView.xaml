@@ -106,7 +106,7 @@
                       Margin="15"
                       MinWidth="165"
                       ItemsSource="{Binding AvailableEvents}"
-                      PlaceholderText="No event available"
+                      PlaceholderText="Choose an event"
                       PlaceholderForeground="LightGray"
                       SelectedValue="{Binding ChosenEventId, Mode=TwoWay}"/>
 
