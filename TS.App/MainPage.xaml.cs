@@ -17,7 +17,6 @@ using Windows.UI.Xaml.Navigation;
 using Newtonsoft.Json;
 using TS.Core.Json;
 using TS.Core.Models;
-using TS.Core.Services;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
