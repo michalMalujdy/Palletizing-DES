@@ -139,6 +139,10 @@
       <Project>{2fdd29e1-583d-4c9f-9b8f-2b351499d1b3}</Project>
       <Name>TS.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\TS.Infrastructure\TS.Infrastructure.csproj">
+      <Project>{e1708c01-6eee-475a-980d-64abf1672a82}</Project>
+      <Name>TS.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
