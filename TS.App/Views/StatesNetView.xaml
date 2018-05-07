@@ -91,5 +91,22 @@
 
         </StackPanel>
 
+        <StackPanel Grid.Column="5"
+                    Orientation="Vertical"
+                    Margin="10 20 10 20">
+
+            <TextBlock Text="Pick an available event and press 'Submit'"
+                       TextWrapping="WrapWholeWords"
+                       TextAlignment="Center"
+                       FontSize="{Binding SmallFontSize}"
+                       HorizontalAlignment="Center"
+                       Padding="10"/>
+
+            <Button Content="Submit"
+                    HorizontalAlignment="Center"
+                    Command="{Binding SubmitEventCommand}"/>
+
+        </StackPanel>
+
     </Grid>
 </Page>

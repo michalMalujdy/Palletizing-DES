@@ -1,4 +1,6 @@
-﻿using TS.App.ViewModels.Common;
+﻿using System.Windows.Input;
+using GalaSoft.MvvmLight.Command;
+using TS.App.ViewModels.Common;
 using TS.Infrastructure.Services;
 
 namespace TS.App.ViewModels
@@ -13,13 +15,22 @@ namespace TS.App.ViewModels
 
         public int LargeFontSize => 55;
         public int MediumFontSize => 40;
+        public int SmallFontSize => 30;
 
+        public ICommand SubmitEventCommand { get; set; }
 
         private readonly StatesNetService _statesNetService;
 
         public StatesNetViewModel(StatesNetService statesNetService)
         {
             _statesNetService = statesNetService;
+
+            SubmitEventCommand = new RelayCommand(SubmitEventButtonClicked);
+        }
+
+        private void SubmitEventButtonClicked()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
