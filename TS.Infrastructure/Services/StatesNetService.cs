@@ -23,5 +23,11 @@ namespace TS.Infrastructure.Services
         {
             return StatesNet.AllStates.SingleOrDefault(s => s.Id == id);
         }
+
+        public void AriseEvent(string eventId)
+        {
+            var nextStateId = StatesNet.CurrentState.AvaliableStatesIds[eventId];
+            StatesNet.CurrentState = GetById(nextStateId);
+        }
     }
 }
