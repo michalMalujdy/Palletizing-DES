@@ -7,10 +7,11 @@ namespace TS.Infrastructure.Services
     {
         public StatesNet StatesNet { get; set; }
 
-        private readonly JsonConfigService _jsonConfigService = new JsonConfigService();
+        private readonly JsonConfigService _jsonConfigService;
 
-        public StatesNetService()
+        public StatesNetService(JsonConfigService jsonConfigService)
         {
+            _jsonConfigService = jsonConfigService;
             var statesNetJson = _jsonConfigService.ReadConfig("net_config.txt");
             StatesNet = Mapper.Map<StatesNet>(statesNetJson);
         }
