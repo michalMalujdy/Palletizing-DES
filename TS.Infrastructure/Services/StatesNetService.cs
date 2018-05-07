@@ -1,9 +1,18 @@
-﻿using TS.Core.Models;
+﻿using AutoMapper;
+using TS.Core.Models;
 
-namespace TS.Core.Services
+namespace TS.Infrastructure.Services
 {
-    class StatesNetService
+    public class StatesNetService
     {
         public StatesNet StatesNet { get; set; }
+
+        private readonly JsonConfigService _jsonConfigService = new JsonConfigService();
+
+        public StatesNetService()
+        {
+            var statesNetJson = _jsonConfigService.ReadConfig("net_config.txt");
+            StatesNet = Mapper.Map<StatesNet>(statesNetJson);
+        }
     }
 }
