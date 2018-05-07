@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Linq;
+using AutoMapper;
 using TS.Core.Models;
 
 namespace TS.Infrastructure.Services
@@ -13,7 +14,14 @@ namespace TS.Infrastructure.Services
         {
             _jsonConfigService = jsonConfigService;
             var statesNetJson = _jsonConfigService.ReadConfig("net_config.txt");
+
             StatesNet = Mapper.Map<StatesNet>(statesNetJson);
+            StatesNet.CurrentState = GetById(statesNetJson.StartStateId);
+        }
+
+        public State GetById(string id)
+        {
+            return StatesNet.AllStates.SingleOrDefault(s => s.Id == id);
         }
     }
 }
