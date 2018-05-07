@@ -96,6 +96,8 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Tools\UiSynchronizer.cs" />
+    <Compile Include="ViewModels\Common\BaseViewModel.cs" />
     <Compile Include="ViewModels\Common\BaseViewModelLocator.cs" />
     <Compile Include="ViewModels\StatesNetViewModel.cs" />
     <Compile Include="Views\StatesNetView.xaml.cs">
