@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using AutoMapper;
+using TS.Core.Json;
 using TS.Core.Models;
 
 namespace TS.Infrastructure.Services
@@ -8,13 +9,8 @@ namespace TS.Infrastructure.Services
     {
         public StatesNet StatesNet { get; set; }
 
-        private readonly JsonConfigService _jsonConfigService;
-
-        public StatesNetService(JsonConfigService jsonConfigService)
+        public void Initialize(StatesNetJson statesNetJson)
         {
-            _jsonConfigService = jsonConfigService;
-            var statesNetJson = _jsonConfigService.ReadConfig("net_config.txt");
-
             StatesNet = Mapper.Map<StatesNet>(statesNetJson);
             StatesNet.CurrentState = GetById(statesNetJson.StartStateId);
         }

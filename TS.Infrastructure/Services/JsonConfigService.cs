@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Threading.Tasks;
+using Windows.Storage;
 using Newtonsoft.Json;
 using TS.Core.Json;
 
@@ -6,10 +8,24 @@ namespace TS.Infrastructure.Services
 {
     public class JsonConfigService
     {
-        public StatesNetJson ReadConfig(string filename)
+        public async Task<StatesNetJson> ReadConfigFile()
         {
-            //var json = File.ReadAllText(filename);
-            var json = _sample;
+            var picker = 
+                new Windows.Storage.Pickers.FileOpenPicker
+                {
+                    ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
+                    SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.PicturesLibrary,
+                };
+
+            picker.FileTypeFilter.Add(".txt");
+            var file = await picker.PickSingleFileAsync();
+
+            if (file == null)
+            {
+                return null;
+            }
+
+            var json = await FileIO.ReadTextAsync(file);
             return JsonConvert.DeserializeObject<StatesNetJson>(json);
         }
 

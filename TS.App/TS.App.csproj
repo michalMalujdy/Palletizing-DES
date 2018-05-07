@@ -143,7 +143,7 @@
       <Name>TS.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\TS.Infrastructure\TS.Infrastructure.csproj">
-      <Project>{e1708c01-6eee-475a-980d-64abf1672a82}</Project>
+      <Project>{a3881f21-53e8-482e-9ef2-b1d56df4afc3}</Project>
       <Name>TS.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
