@@ -101,6 +101,14 @@
                        FontSize="{Binding SmallFontSize}"
                        HorizontalAlignment="Center"
                        Padding="10"/>
+            
+            <ComboBox HorizontalAlignment="Center"
+                      Margin="15"
+                      MinWidth="165"
+                      ItemsSource="{Binding AvailableEvents}"
+                      PlaceholderText="No event available"
+                      PlaceholderForeground="LightGray"
+                      SelectedValue="{Binding ChosenEventId, Mode=TwoWay}"/>
 
             <Button Content="Submit"
                     HorizontalAlignment="Center"

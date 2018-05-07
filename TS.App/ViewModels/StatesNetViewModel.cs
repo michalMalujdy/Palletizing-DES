@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using TS.App.ViewModels.Common;
 using TS.Infrastructure.Services;
@@ -19,6 +21,20 @@ namespace TS.App.ViewModels
 
         public ICommand SubmitEventCommand { get; set; }
 
+        private string _chosenEventId;
+        public string ChosenEventId
+        {
+            get => _chosenEventId;
+
+            set
+            {
+                _chosenEventId = value;
+                RaisePropertyChanged(nameof(ChosenEventId));
+            }
+        }
+
+        public ICollection<string> AvailableEvents => _statesNetService.StatesNet.CurrentState.AvaliableStatesIds.Keys;
+
         private readonly StatesNetService _statesNetService;
 
         public StatesNetViewModel(StatesNetService statesNetService)
@@ -26,11 +42,24 @@ namespace TS.App.ViewModels
             _statesNetService = statesNetService;
 
             SubmitEventCommand = new RelayCommand(SubmitEventButtonClicked);
+
+            ChosenEventId = AvailableEvents.FirstOrDefault();
+        }
+
+        public void Refresh()
+        {
+            RaisePropertyChanged(nameof(GpText));
+            RaisePropertyChanged(nameof(Sl1Text));
+            RaisePropertyChanged(nameof(Sl2Text));
+            RaisePropertyChanged(nameof(UpText));
+            RaisePropertyChanged(nameof(SvText));
+
+            ChosenEventId = AvailableEvents.FirstOrDefault();
         }
 
         private void SubmitEventButtonClicked()
         {
-            throw new System.NotImplementedException();
+            Refresh();
         }
     }
 }
