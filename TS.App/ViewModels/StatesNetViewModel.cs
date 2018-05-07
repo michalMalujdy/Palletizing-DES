@@ -18,11 +18,14 @@ namespace TS.App.ViewModels
         public int LargeFontSize => 55;
         public int MediumFontSize => 40;
         public int SmallFontSize => 30;
-
-        public ICommand SubmitEventCommand { get; set; }
-        public string ChosenEventId { get; set; }
+        public int TinyFontSize => 18;
 
         public ICollection<string> AvailableEvents => _statesNetService.StatesNet.CurrentState.AvaliableStatesIds.Keys;
+        public string ChosenEventId { get; set; }
+        public ICommand SubmitEventCommand { get; set; }
+
+        public string PreviousState => _statesNetService.StatesNet.PreviousStateId ?? "none";
+        public string RecentEvent => _statesNetService.StatesNet.PreviousEventId ?? "none";
 
         private readonly StatesNetService _statesNetService;
 
@@ -40,6 +43,8 @@ namespace TS.App.ViewModels
             RaisePropertyChanged(nameof(UpText));
             RaisePropertyChanged(nameof(SvText));
             RaisePropertyChanged(nameof(AvailableEvents));
+            RaisePropertyChanged(nameof(PreviousState));
+            RaisePropertyChanged(nameof(RecentEvent));
         }
 
         private void SubmitEventButtonClicked()

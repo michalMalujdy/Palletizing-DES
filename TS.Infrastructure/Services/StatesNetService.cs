@@ -26,6 +26,9 @@ namespace TS.Infrastructure.Services
 
         public void AriseEvent(string eventId)
         {
+            StatesNet.PreviousStateId = StatesNet.CurrentState.Id;
+            StatesNet.PreviousEventId = eventId;
+
             var nextStateId = StatesNet.CurrentState.AvaliableStatesIds[eventId];
             StatesNet.CurrentState = GetById(nextStateId);
         }

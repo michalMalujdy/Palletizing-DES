@@ -5,7 +5,11 @@
     xmlns:local="using:TS.App.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    d:DesignWidth="1024"
+    d:DesignHeight="600"
+    MinWidth="1024"
+    MinHeight="410">
 
     <Page.DataContext>
         <Binding Path="StatesNetViewModel" Source="{StaticResource ViewModelLocator}"/>
@@ -13,15 +17,35 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
+        <StackPanel Grid.Column="2" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
+        <StackPanel Grid.Column="3" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
+        <StackPanel Grid.Column="4" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
+        <StackPanel Grid.Column="5" Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="3 0 0 0"/>
+        
+        <TextBlock Grid.ColumnSpan="5"
+                   Grid.Row="0"
+                   Grid.Column="0"
+                   Text="Current states of minor automats"
+                   FontSize="{Binding MediumFontSize}"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Center"/>
+
         <StackPanel Grid.Column="0"
+                    Grid.Row="1"
                     Orientation="Vertical"
                     Margin="10 20 10 20">
 
@@ -36,6 +60,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1"
+                    Grid.Row="1"
                     Orientation="Vertical"
                     Margin="10 20 10 20">
 
@@ -50,6 +75,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="2"
+                    Grid.Row="1"
                     Orientation="Vertical"
                     Margin="10 20 10 20">
 
@@ -64,6 +90,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="3"
+                    Grid.Row="1"
                     Orientation="Vertical"
                     Margin="10 20 10 20">
 
@@ -78,6 +105,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="4"
+                    Grid.Row="1"
                     Orientation="Vertical"
                     Margin="10 20 10 20">
 
@@ -92,6 +120,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="5"
+                    Grid.RowSpan="2"
                     Orientation="Vertical"
                     Margin="10 20 10 20">
 
@@ -104,7 +133,7 @@
             
             <ComboBox HorizontalAlignment="Center"
                       Margin="15"
-                      MinWidth="165"
+                      MinWidth="210"
                       ItemsSource="{Binding AvailableEvents}"
                       PlaceholderText="Choose an event"
                       PlaceholderForeground="LightGray"
@@ -113,6 +142,33 @@
             <Button Content="Submit"
                     HorizontalAlignment="Center"
                     Command="{Binding SubmitEventCommand}"/>
+
+        </StackPanel>
+
+        <StackPanel Grid.Column="5"
+                    Grid.RowSpan="2"
+                    VerticalAlignment="Bottom"
+                    Margin="10 20 10 20">
+
+            <StackPanel Margin="0 0 0 15">
+
+                <TextBlock Text="Previous state: "
+                           FontSize="{Binding TinyFontSize}"/>
+                
+                <TextBlock Text="{Binding PreviousState}"
+                           FontSize="{Binding TinyFontSize}"/>
+
+            </StackPanel>
+
+            <StackPanel>
+
+                <TextBlock Text="Recent event: "
+                           FontSize="{Binding TinyFontSize}"/>
+
+                <TextBlock Text="{Binding RecentEvent}"
+                           FontSize="{Binding TinyFontSize}"/>
+
+            </StackPanel>
 
         </StackPanel>
 
