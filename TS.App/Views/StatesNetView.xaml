@@ -26,12 +26,12 @@
                     Margin="10 20 10 20">
 
             <TextBlock Text="GP"
-                     FontSize="35"
+                     FontSize="{Binding LargeFontSize}"
                      HorizontalAlignment="Center"/>
 
-            <TextBlock Text="Dupa"
-                     FontSize="30"
-                     HorizontalAlignment="Center"/>
+            <TextBlock Text="{Binding GpText}"
+                       FontSize="{Binding MediumFontSize}"
+                       HorizontalAlignment="Center"/>
 
         </StackPanel>
 
@@ -40,8 +40,12 @@
                     Margin="10 20 10 20">
 
             <TextBlock Text="SL1"
-                     FontSize="35"
+                     FontSize="{Binding LargeFontSize}"
                      HorizontalAlignment="Center"/>
+
+            <TextBlock Text="{Binding Sl1Text}"
+                       FontSize="{Binding MediumFontSize}"
+                       HorizontalAlignment="Center"/>
 
         </StackPanel>
 
@@ -50,8 +54,12 @@
                     Margin="10 20 10 20">
 
             <TextBlock Text="SL2"
-                     FontSize="35"
+                     FontSize="{Binding LargeFontSize}"
                      HorizontalAlignment="Center"/>
+
+            <TextBlock Text="{Binding Sl2Text}"
+                       FontSize="{Binding MediumFontSize}"
+                       HorizontalAlignment="Center"/>
 
         </StackPanel>
 
@@ -60,8 +68,12 @@
                     Margin="10 20 10 20">
 
             <TextBlock Text="Up"
-                     FontSize="35"
+                     FontSize="{Binding LargeFontSize}"
                      HorizontalAlignment="Center"/>
+
+            <TextBlock Text="{Binding UpText}"
+                       FontSize="{Binding MediumFontSize}"
+                       HorizontalAlignment="Center"/>
 
         </StackPanel>
 
@@ -70,8 +82,12 @@
                     Margin="10 20 10 20">
 
             <TextBlock Text="Sv"
-                     FontSize="35"
+                     FontSize="{Binding LargeFontSize}"
                      HorizontalAlignment="Center"/>
+
+            <TextBlock Text="{Binding SvText}"
+                       FontSize="{Binding MediumFontSize}"
+                       HorizontalAlignment="Center"/>
 
         </StackPanel>
 
