@@ -5,11 +5,12 @@
     xmlns:local="using:TS.App.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:TS.Core.Models"
     mc:Ignorable="d"
-    d:DesignWidth="1024"
-    d:DesignHeight="600"
-    MinWidth="1024"
-    MinHeight="500">
+    d:DesignWidth="1280"
+    d:DesignHeight="720"
+    MinWidth="1280"
+    MinHeight="720">
 
     <Page.DataContext>
         <Binding Path="StatesNetViewModel" Source="{StaticResource ViewModelLocator}"/>
@@ -119,26 +120,33 @@
 
         </StackPanel>
 
-        <StackPanel Grid.Column="5"
-                    Grid.Row="0"
-                    Grid.RowSpan="2"
-                    Orientation="Vertical"
-                    Margin="10 20 10 20">
+        <Grid Grid.Column="5"
+              Grid.Row="0"
+              Grid.RowSpan="2"
+              Margin="10 20 10 20">
 
-            <StackPanel BorderBrush="LightGray"
+            <Grid.RowDefinitions>
+                <RowDefinition Height="300"/>
+                <RowDefinition Height="190"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0"
+                        BorderBrush="LightGray"
                         BorderThickness="0 0 0 1">
                 <StackPanel>
 
-                    <TextBlock Text="Pick an available event and press 'Submit'"
+                    <TextBlock Text="Next state"
                                TextWrapping="WrapWholeWords"
                                TextAlignment="Center"
                                FontSize="{Binding SmallFontSize}"
                                HorizontalAlignment="Center"
-                               Padding="10"/>
+                               Padding="5"/>
 
                     <ComboBox HorizontalAlignment="Center"
                               Margin="15"
-                              MinWidth="210"
+                              MinWidth="300"
                               ItemsSource="{Binding AvailableEvents}"
                               PlaceholderText="Choose an event"
                               PlaceholderForeground="LightGray"
@@ -175,12 +183,59 @@
                 </StackPanel>
             </StackPanel>
 
-            <StackPanel>
-                
-                
+            <StackPanel Grid.Row="1">
+
+                <TextBlock Text="Find path"
+                               TextWrapping="WrapWholeWords"
+                               TextAlignment="Center"
+                               FontSize="{Binding SmallFontSize}"
+                               HorizontalAlignment="Center"
+                               Padding="5"/>
+
+                <ComboBox HorizontalAlignment="Center"
+                          Margin="10 10 10 0"
+                          MinWidth="300"
+                          ItemsSource="{Binding AllStates}"
+                          PlaceholderText="Start state"
+                          PlaceholderForeground="LightGray"
+                          SelectedValue="{Binding ChosenStartStateId, Mode=TwoWay}"/>
+
+                <ComboBox HorizontalAlignment="Center"
+                          Margin="10 10 10 10"
+                          MinWidth="300"
+                          ItemsSource="{Binding AllFinishStates}"
+                          PlaceholderText="Finish state"
+                          PlaceholderForeground="LightGray"
+                          SelectedValue="{Binding ChosenFinishStateId, Mode=TwoWay}"/>
+
+                <Button Content="Find"
+                        HorizontalAlignment="Center"
+                        Command="{Binding PathBetweenStatesCommand}"/>
 
             </StackPanel>
-        </StackPanel>
+
+            <ScrollViewer Grid.Row="2" BorderBrush="LightGray" BorderThickness="0 0 0 1">
+                <ListView ItemsSource="{Binding FoundPath}" HorizontalAlignment="Center"  BorderBrush="LightGray" BorderThickness="0 3 0 3">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:Name="SingleLineDataTemplate" x:DataType="models:StatesPathNode">
+                            <Grid Width="250" HorizontalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Grid.Row="0" Text="{Binding State.Id}"  Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
+                                <TextBlock Grid.Row="1" Text="{Binding LeavingEventId}" Style="{ThemeResource CaptionTextBlockStyle}" HorizontalAlignment="Center" Opacity=".8"/>
+                                <TextBlock Grid.Row="2" Text="↓" Style="{ThemeResource CaptionTextBlockStyle}" HorizontalAlignment="Center" FontSize="30" Opacity=".8"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
+
+        </Grid>
 
         <Button Grid.Column="5"
                 Grid.Row="1"

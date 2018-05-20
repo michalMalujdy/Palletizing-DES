@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using TS.App.ViewModels.Common;
+using TS.Core.Models;
 using TS.Infrastructure.Services;
 
 namespace TS.App.ViewModels
@@ -23,14 +24,46 @@ namespace TS.App.ViewModels
         public int MediumFontSize => 40;
         public int SmallFontSize => 30;
         public int TinyFontSize => 18;
+        public int MicroFontSize => 11;
 
         public string ChosenEventId { get; set; }
+        private string _chosenStartStateId;
+
+        public string ChosenStartStateId
+        {
+            get => _chosenStartStateId;
+            set
+            {
+                _chosenStartStateId = value;
+                RaisePropertyChanged(nameof(AllFinishStates));
+            }
+        }
+        public string ChosenFinishStateId { get; set; }
+        public ICollection<StatesPathNode> FoundPath { get; set; }
+
         public ICollection<string> AvailableEvents =>
             _statesNetService.StatesNet?.CurrentState?.AvaliableStatesIds?.Keys;
 
+        public ICollection<string> AllStates =>
+            _statesNetService.StatesNet?.AllStates?.Select(s => s.Id).ToList();
+
+        public ICollection<string> AllFinishStates
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(ChosenStartStateId))
+                {
+                    return new List<string>();
+                }
+
+                return AllStates.Where(id => !id.Equals(ChosenStartStateId)).ToList();
+            }
+        }
+
         public ICommand SubmitEventCommand { get; set; }
         public ICommand LoadConfigCommand { get; set; }
-        
+        public ICommand PathBetweenStatesCommand { get; set; }
+
         private readonly StatesNetService _statesNetService;
         private readonly JsonConfigService _jsonConfigService;
 
@@ -41,6 +74,7 @@ namespace TS.App.ViewModels
 
             SubmitEventCommand = new RelayCommand(SubmitEventButtonClicked);
             LoadConfigCommand = new RelayCommand(() => OnLoadConfigClicked());
+            PathBetweenStatesCommand = new RelayCommand(FindPathBetweenStatesClicked);
         }
 
         public void Refresh()
@@ -51,6 +85,8 @@ namespace TS.App.ViewModels
             RaisePropertyChanged(nameof(UpText));
             RaisePropertyChanged(nameof(SvText));
             RaisePropertyChanged(nameof(AvailableEvents));
+            RaisePropertyChanged(nameof(AllStates));
+            RaisePropertyChanged(nameof(AllFinishStates));
             RaisePropertyChanged(nameof(PreviousState));
             RaisePropertyChanged(nameof(RecentEvent));
         }
@@ -65,6 +101,12 @@ namespace TS.App.ViewModels
 
             _statesNetService.AriseEvent(ChosenEventId);
             Refresh();
+        }
+
+        private void FindPathBetweenStatesClicked()
+        {
+            FoundPath = _statesNetService.FindPath(ChosenStartStateId, ChosenFinishStateId)?.StatesPathCollection;
+            RaisePropertyChanged(nameof(FoundPath));
         }
 
         private async Task OnLoadConfigClicked()

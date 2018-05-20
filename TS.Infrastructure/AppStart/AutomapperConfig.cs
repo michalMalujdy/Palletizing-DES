@@ -12,6 +12,8 @@ namespace TS.Infrastructure.AppStart
             {
                 config.CreateMap<StateJson, State>();
                 config.CreateMap<StatesNetJson, StatesNet>();
+                config.CreateMap<StatesPath, StatesPath>();
+                config.CreateMap<StatesNet, StatesNet>();
             });
         }
     }
