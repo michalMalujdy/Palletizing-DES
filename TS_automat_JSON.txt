@@ -137,7 +137,7 @@
          "Sv":"SV_U20",
          "AvaliableStatesIds":{
             "Line1Unloaded":"GP_I,SL1_W,SL2_E,UP_I,SV_UD20",
-            "PalletAvalible":"GP_PL,SL1_2,SL2_E,UP_I,SV_U20"
+            "PalletAvalible":"GP_PL,SL1_2,SL2_E,UP_UL1,SV_U20"
          }
       },
       {
@@ -420,7 +420,7 @@
          "Up":"UP_I",
          "Sv":"SV_12",
          "AvaliableStatesIds":{
-            "Line2Full":"GP_PL,SL1_2,SL2_2,UP_UL2,SV_U12"
+            "Line2Full":"GP_PL,SL1_1,SL2_2,UP_UL2,SV_U12"
          }
       },
       {

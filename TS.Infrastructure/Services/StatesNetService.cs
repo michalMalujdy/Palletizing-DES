@@ -42,9 +42,8 @@ namespace TS.Infrastructure.Services
 
             PerformStep(new StatesPath(), net, net.CurrentState, finishStateId);
 
-            return ImportantPaths
-                .Where(p => p.Status == StatesPathStatus.Successful)
-                .OrderBy(p => p.StatesPathCollection.Count).FirstOrDefault();
+            var succesful = ImportantPaths.Where(p => p.Status == StatesPathStatus.Successful).ToList();
+            return succesful.OrderBy(p => p.StatesPathCollection.Count).FirstOrDefault();
         }
 
         private void PerformStep(StatesPath path, StatesNet net, State currentState, string finishStateId)
@@ -52,16 +51,15 @@ namespace TS.Infrastructure.Services
             if (StateOccuredPreviously(path, currentState))
             {
                 path.Status = StatesPathStatus.Unsuccessful;
-                ImportantPaths.Add(path);
+                path.StatesPathCollection.Add(new StatesPathNode() { State = currentState });
+                ImportantPaths.Add(Mapper.Map<StatesPath>(path));
                 return;
             }
-
-            var currentNode = new StatesPathNode() { State = currentState };
-            path.StatesPathCollection.Add(currentNode);
-
+            
             if (currentState.Id.Equals(finishStateId))
             {
                 path.Status = StatesPathStatus.Successful;
+                path.StatesPathCollection.Add(new StatesPathNode() { State = currentState });
                 ImportantPaths.Add(Mapper.Map<StatesPath>(path));
                 return;
             }
@@ -70,7 +68,12 @@ namespace TS.Infrastructure.Services
 
             foreach (var availableEvent in currentState.AvailableEvents)
             {
-                currentNode.LeavingEventId = availableEvent;
+                var currentNode = new StatesPathNode()
+                {
+                    State = currentState,
+                    LeavingEventId = availableEvent
+                };
+                pathCopy.StatesPathCollection.Add(currentNode);
 
                 var nextStateId = currentState.AvaliableStatesIds[availableEvent];
                 var nextState = net.GetById(nextStateId);
