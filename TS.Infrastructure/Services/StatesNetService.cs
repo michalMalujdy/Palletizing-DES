@@ -48,31 +48,29 @@ namespace TS.Infrastructure.Services
 
         private void PerformStep(StatesPath path, StatesNet net, State currentState, string finishStateId)
         {
+            var pathCopy = Mapper.Map<StatesPath>(path);
+            var currentNode = new StatesPathNode() { State = currentState };
+
             if (StateOccuredPreviously(path, currentState))
             {
                 path.Status = StatesPathStatus.Unsuccessful;
-                path.StatesPathCollection.Add(new StatesPathNode() { State = currentState });
-                ImportantPaths.Add(Mapper.Map<StatesPath>(path));
+                path.StatesPathCollection.Add(currentNode);
+                ImportantPaths.Add(pathCopy);
                 return;
             }
             
             if (currentState.Id.Equals(finishStateId))
             {
                 path.Status = StatesPathStatus.Successful;
-                path.StatesPathCollection.Add(new StatesPathNode() { State = currentState });
-                ImportantPaths.Add(Mapper.Map<StatesPath>(path));
+                path.StatesPathCollection.Add(currentNode);
+                ImportantPaths.Add(pathCopy);
                 return;
             }
 
-            var pathCopy = Mapper.Map<StatesPath>(path);
 
             foreach (var availableEvent in currentState.AvailableEvents)
             {
-                var currentNode = new StatesPathNode()
-                {
-                    State = currentState,
-                    LeavingEventId = availableEvent
-                };
+                currentNode.LeavingEventId = availableEvent;
                 pathCopy.StatesPathCollection.Add(currentNode);
 
                 var nextStateId = currentState.AvaliableStatesIds[availableEvent];
@@ -85,8 +83,8 @@ namespace TS.Infrastructure.Services
         private bool StateOccuredPreviously(StatesPath path, State currentState)
         {
             return path.StatesPathCollection
-                .Select(node => node.State)
-                .Contains(currentState);
+                .Select(node => node.State.Id)
+                .Contains(currentState.Id);
         }
     }
 }
