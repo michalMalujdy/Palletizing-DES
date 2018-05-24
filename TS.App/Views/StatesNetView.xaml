@@ -28,23 +28,30 @@
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*" MinHeight="200"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
-        <StackPanel Grid.Column="2" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
-        <StackPanel Grid.Column="3" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
-        <StackPanel Grid.Column="4" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
-        <StackPanel Grid.Column="5" Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="3 0 0 0"/>
-        
-        <TextBlock Grid.ColumnSpan="5"
-                   Grid.Row="0"
-                   Grid.Column="0"
-                   Text="Current states of minor automats"
-                   FontSize="{Binding MediumFontSize}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+        <StackPanel Grid.Column="0" Grid.Row="1" BorderBrush="LightGray" BorderThickness="0 0 0 3"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 3"/>
+        <StackPanel Grid.Column="2" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 3"/>
+        <StackPanel Grid.Column="3" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 3"/>
+        <StackPanel Grid.Column="4" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 3"/>
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="0 0 3 0"/>
+
+        <StackPanel Grid.ColumnSpan="5"
+                    Grid.Row="0"
+                    Grid.Column="0">
+
+            <TextBlock 
+                       Text="Current states of minor automats"
+                       FontSize="{Binding MediumFontSize}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="20 0 0 0"/>
+
+        </StackPanel>
 
         <StackPanel Grid.Column="0"
                     Grid.Row="1"
@@ -121,88 +128,136 @@
 
         </StackPanel>
 
+
+        <Grid  Grid.Row="2"
+               Grid.Column="0"
+               Grid.ColumnSpan="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel BorderBrush="LightGray"
+                        BorderThickness="0 0 3 0">
+
+                <StackPanel>
+
+                    <TextBlock Text="Next state"
+                                   TextWrapping="WrapWholeWords"
+                                   TextAlignment="Center"
+                                   FontSize="{Binding SmallFontSize}"
+                                   HorizontalAlignment="Left"
+                                   Margin="20 0 0 5"/>
+
+                    <ComboBox HorizontalAlignment="Left"
+                                  Margin="20 0 0 0"
+                                  MinWidth="300"
+                                  ItemsSource="{Binding AvailableEvents}"
+                                  PlaceholderText="Choose an event"
+                                  PlaceholderForeground="LightGray"
+                                  SelectedValue="{Binding ChosenEventId, Mode=TwoWay}"/>
+
+                    <Button Content="Submit"
+                            HorizontalAlignment="Left"
+                            Margin="20 10 0 0"
+                            Command="{Binding SubmitEventCommand}"/>
+
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Bottom"
+                                Margin="10 20 10 20">
+
+                    <StackPanel Margin="10 0 0 15">
+
+                        <TextBlock Text="Previous state: "
+                                       FontSize="{Binding TinyFontSize}"/>
+
+                        <TextBlock Text="{Binding PreviousState}"
+                                       FontSize="{Binding TinyFontSize}"/>
+
+                    </StackPanel>
+
+                    <StackPanel Margin="10 0 0 0">
+
+                        <TextBlock Text="Recent event: "
+                                       FontSize="{Binding TinyFontSize}"/>
+
+                        <TextBlock Text="{Binding RecentEvent}"
+                                       FontSize="{Binding TinyFontSize}"/>
+
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+            
+            <StackPanel Grid.Column="1"
+                        BorderBrush="LightGray"
+                        BorderThickness="0 0 3 0">
+
+                <TextBlock Text="Check blocking"
+                           TextWrapping="WrapWholeWords"
+                           TextAlignment="Center"
+                           FontSize="{Binding SmallFontSize}"
+                           HorizontalAlignment="Left"
+                           Margin="20 0 0 0"/>
+
+                <Button Content="Check"
+                        HorizontalAlignment="Left"
+                        Margin="20 10 0 0"
+                        Command="{Binding CheckBlockingCommand}"/>
+
+                <StackPanel Orientation="Horizontal">
+
+                    <TextBlock Text="Status: "
+                               TextAlignment="Left"
+                               Margin="20 15 0 0"
+                               FontSize="{Binding TinyFontSize}"/>
+
+                    <TextBlock Text="{Binding BlockingStatus}"
+                               FontSize="{Binding TinyFontSize}"
+                               Foreground="{Binding BlockingTextForeground}"
+                               TextWrapping="WrapWholeWords"
+                               TextAlignment="Left"
+                               HorizontalAlignment="Left"
+                               Margin="5 15 0 0"
+                               FontWeight="Bold"/>
+
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
         <Grid Grid.Column="5"
               Grid.Row="0"
-              Grid.RowSpan="2"
+              Grid.RowSpan="3"
               Margin="10 20 10 20">
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="300"/>
+                <RowDefinition Height="200"/>
                 <RowDefinition Height="190"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0"
-                        BorderBrush="LightGray"
-                        BorderThickness="0 0 0 1">
-                <StackPanel>
-
-                    <TextBlock Text="Next state"
-                               TextWrapping="WrapWholeWords"
-                               TextAlignment="Center"
-                               FontSize="{Binding SmallFontSize}"
-                               HorizontalAlignment="Center"
-                               Padding="5"/>
-
-                    <ComboBox HorizontalAlignment="Center"
-                              Margin="15"
-                              MinWidth="300"
-                              ItemsSource="{Binding AvailableEvents}"
-                              PlaceholderText="Choose an event"
-                              PlaceholderForeground="LightGray"
-                              SelectedValue="{Binding ChosenEventId, Mode=TwoWay}"/>
-
-                    <Button Content="Submit"
-                            HorizontalAlignment="Center"
-                            Command="{Binding SubmitEventCommand}"/>
-
-                </StackPanel>
-
-                <StackPanel VerticalAlignment="Bottom"
-                            Margin="10 20 10 20">
-
-                    <StackPanel Margin="0 0 0 15">
-
-                        <TextBlock Text="Previous state: "
-                                   FontSize="{Binding TinyFontSize}"/>
-
-                        <TextBlock Text="{Binding PreviousState}"
-                                   FontSize="{Binding TinyFontSize}"/>
-
-                    </StackPanel>
-
-                    <StackPanel >
-
-                        <TextBlock Text="Recent event: "
-                                   FontSize="{Binding TinyFontSize}"/>
-
-                        <TextBlock Text="{Binding RecentEvent}"
-                                   FontSize="{Binding TinyFontSize}"/>
-
-                    </StackPanel>
-                </StackPanel>
-            </StackPanel>
-
-            <StackPanel Grid.Row="1">
+                        Grid.RowSpan="3">
 
                 <TextBlock Text="Find path"
-                               TextWrapping="WrapWholeWords"
-                               TextAlignment="Center"
-                               FontSize="{Binding SmallFontSize}"
-                               HorizontalAlignment="Center"
-                               Padding="5"/>
+                           TextWrapping="WrapWholeWords"
+                           TextAlignment="Center"
+                           FontSize="{Binding SmallFontSize}"
+                           HorizontalAlignment="Left"
+                           Margin="20 0 0 0"/>
 
-                <ComboBox HorizontalAlignment="Center"
-                          Margin="10 10 10 0"
+                <ComboBox HorizontalAlignment="Left"
+                          Margin="20 10 10 0"
                           MinWidth="300"
                           ItemsSource="{Binding AllStates}"
                           PlaceholderText="Start state"
                           PlaceholderForeground="LightGray"
                           SelectedValue="{Binding ChosenStartStateId, Mode=TwoWay}"/>
 
-                <ComboBox HorizontalAlignment="Center"
-                          Margin="10 10 10 10"
+                <ComboBox HorizontalAlignment="Left"
+                          Margin="20 10 10 10"
                           MinWidth="300"
                           ItemsSource="{Binding AllFinishStates}"
                           PlaceholderText="Finish state"
@@ -210,12 +265,13 @@
                           SelectedValue="{Binding ChosenFinishStateId, Mode=TwoWay}"/>
 
                 <Button Content="Find"
-                        HorizontalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="20 0 0 0"
                         Command="{Binding PathBetweenStatesCommand}"/>
 
             </StackPanel>
 
-            <ScrollViewer Grid.Row="2" BorderBrush="LightGray" BorderThickness="0 0 0 1">
+            <ScrollViewer Grid.Row="1" Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="0 0 0 1">
                 <ListView ItemsSource="{Binding FoundPath}" HorizontalAlignment="Center"  BorderBrush="LightGray" BorderThickness="0 3 0 3">
                     <ListView.ItemTemplate>
                         <DataTemplate x:Name="SingleLineDataTemplate" x:DataType="components:StatesPathNodeViewModel">
@@ -239,7 +295,7 @@
         </Grid>
 
         <Button Grid.Column="5"
-                Grid.Row="1"
+                Grid.Row="2"
                 Content="Load config file"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
