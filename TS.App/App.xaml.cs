@@ -14,8 +14,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using TS.App.AppStart;
 using TS.App.Views;
-using TS.Infrastructure.AppStart;
 
 namespace TS.App
 {
