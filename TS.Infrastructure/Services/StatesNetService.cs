@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AutoMapper;
+using TS.Common.Extensions;
 using TS.Core.Enums;
 using TS.Core.Json;
 using TS.Core.Models;
@@ -40,7 +41,7 @@ namespace TS.Infrastructure.Services
             var net = Mapper.Map<StatesNet>(StatesNet);
             net.CurrentState = net.GetById(startStateId);
 
-            PerformStep(new StatesPath(), net, net.CurrentState, finishStateId);
+            StepInsideNet(new StatesPath(), net, net.CurrentState, finishStateId);
             
             return ImportantPaths
                 .Where(p => p.Status == StatesPathStatus.Successful)
@@ -48,24 +49,37 @@ namespace TS.Infrastructure.Services
                 .FirstOrDefault();
         }
 
-        private void PerformStep(StatesPath path, StatesNet net, State currentState, string finishStateId)
+        public StatesPath CheckBlocking()
         {
+            ImportantPaths = new List<StatesPath>();
+            var net = Mapper.Map<StatesNet>(StatesNet);
+            var startState = net.AllStates.First();
+            var finishState = net.AllStates.Last();
+            net.CurrentState = startState;
+
+            StepInsideNet(new StatesPath(), net, net.CurrentState, finishState.Id);
+
+            return ImportantPaths
+                .FirstOrDefault(p => p.Status == StatesPathStatus.Blocked);
+        }
+
+        private void StepInsideNet(StatesPath path, StatesNet net, State currentState, string finishStateId)
+        {
+            if (currentState.AvailableEvents.IsNullOrEmpty())
+            {
+                EndPath(path, currentState, StatesPathStatus.Blocked);
+                return;
+            }
 
             if (StateOccuredPreviously(path, currentState))
             {
-                var pathCopy = Mapper.Map<StatesPath>(path);
-                pathCopy.Status = StatesPathStatus.Unsuccessful;
-                pathCopy.StatesPathCollection.Add(new StatesPathNode() { State = currentState });
-                ImportantPaths.Add(pathCopy);
+                EndPath(path, currentState, StatesPathStatus.Unsuccessful);
                 return;
             }
             
             if (currentState.Id.Equals(finishStateId))
             {
-                var pathCopy = Mapper.Map<StatesPath>(path);
-                pathCopy.Status = StatesPathStatus.Successful;
-                pathCopy.StatesPathCollection.Add(new StatesPathNode() { State = currentState });
-                ImportantPaths.Add(pathCopy);
+                EndPath(path, currentState, StatesPathStatus.Successful);
                 return;
             }
 
@@ -83,7 +97,7 @@ namespace TS.Infrastructure.Services
                 var nextStateId = currentState.AvaliableStatesIds[availableEvent];
                 var nextState = net.GetById(nextStateId);
 
-                PerformStep(iterationPath, net, nextState, finishStateId);
+                StepInsideNet(iterationPath, net, nextState, finishStateId);
             }
         }
 
@@ -92,6 +106,15 @@ namespace TS.Infrastructure.Services
             return path.StatesPathCollection
                 .Select(node => node.State.Id)
                 .Any(id => id.Equals(currentState.Id));
+        }
+
+        private void EndPath(StatesPath path, State currentState, StatesPathStatus pathStatus)
+        {
+
+            var pathCopy = Mapper.Map<StatesPath>(path);
+            pathCopy.Status = pathStatus;
+            pathCopy.StatesPathCollection.Add(new StatesPathNode() { State = currentState });
+            ImportantPaths.Add(pathCopy);
         }
     }
 }
