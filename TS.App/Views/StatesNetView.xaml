@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:TS.Core.Models"
+    xmlns:components="using:TS.App.ViewModels.Components"
     mc:Ignorable="d"
     d:DesignWidth="1280"
     d:DesignHeight="720"
@@ -217,7 +218,7 @@
             <ScrollViewer Grid.Row="2" BorderBrush="LightGray" BorderThickness="0 0 0 1">
                 <ListView ItemsSource="{Binding FoundPath}" HorizontalAlignment="Center"  BorderBrush="LightGray" BorderThickness="0 3 0 3">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:Name="SingleLineDataTemplate" x:DataType="models:StatesPathNode">
+                        <DataTemplate x:Name="SingleLineDataTemplate" x:DataType="components:StatesPathNodeViewModel">
                             <Grid Width="250" HorizontalAlignment="Center">
                                 <Grid.RowDefinitions>
                                     <RowDefinition/>
@@ -225,9 +226,9 @@
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Grid.Row="0" Text="{Binding State.Id}"  Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Row="1" Text="{Binding LeavingEventId}" Style="{ThemeResource CaptionTextBlockStyle}" HorizontalAlignment="Center" Opacity=".8"/>
-                                <TextBlock Grid.Row="2" Text="↓" Style="{ThemeResource CaptionTextBlockStyle}" HorizontalAlignment="Center" FontSize="30" Opacity=".8"/>
+                                <TextBlock Grid.Row="0" Text="{Binding State.Id}"  Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Center" Foreground="{Binding Brush}"/>
+                                <TextBlock Grid.Row="1" Text="{Binding LeavingEventId}" Style="{ThemeResource CaptionTextBlockStyle}" HorizontalAlignment="Center" Opacity=".8" Foreground="{Binding Brush}"/>
+                                <TextBlock Grid.Row="2" Text="{Binding TransitionSign}" Visibility="{Binding TransitionVisibility}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{Binding Brush}" HorizontalAlignment="Center" FontSize="30" Opacity=".8"/>
 
                             </Grid>
                         </DataTemplate>
