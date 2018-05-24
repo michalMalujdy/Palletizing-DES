@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace TS.Core.Models
 {
@@ -13,6 +14,7 @@ namespace TS.Core.Models
         public string Id => $"{Gp},{Sl1},{Sl2},{Up},{Sv}";
 
         public Dictionary<string, string> AvaliableStatesIds { get; set; }
+        public List<string> AvailableEvents => AvaliableStatesIds.Keys.ToList();
 
         public State()
         {

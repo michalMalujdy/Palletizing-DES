@@ -5,11 +5,13 @@
     xmlns:local="using:TS.App.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:TS.Core.Models"
+    xmlns:components="using:TS.App.ViewModels.Components"
     mc:Ignorable="d"
-    d:DesignWidth="1024"
-    d:DesignHeight="600"
-    MinWidth="1024"
-    MinHeight="500">
+    d:DesignWidth="1280"
+    d:DesignHeight="720"
+    MinWidth="1280"
+    MinHeight="720">
 
     <Page.DataContext>
         <Binding Path="StatesNetViewModel" Source="{StaticResource ViewModelLocator}"/>
@@ -26,23 +28,30 @@
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*" MinHeight="200"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
-        <StackPanel Grid.Column="2" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
-        <StackPanel Grid.Column="3" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
-        <StackPanel Grid.Column="4" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 0"/>
-        <StackPanel Grid.Column="5" Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="3 0 0 0"/>
-        
-        <TextBlock Grid.ColumnSpan="5"
-                   Grid.Row="0"
-                   Grid.Column="0"
-                   Text="Current states of minor automats"
-                   FontSize="{Binding MediumFontSize}"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"/>
+        <StackPanel Grid.Column="0" Grid.Row="1" BorderBrush="LightGray" BorderThickness="0 0 0 3"/>
+        <StackPanel Grid.Column="1" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 3"/>
+        <StackPanel Grid.Column="2" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 3"/>
+        <StackPanel Grid.Column="3" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 3"/>
+        <StackPanel Grid.Column="4" Grid.Row="1" BorderBrush="LightGray" BorderThickness="1 0 0 3"/>
+        <StackPanel Grid.Column="0" Grid.ColumnSpan="5" Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="0 0 3 0"/>
+
+        <StackPanel Grid.ColumnSpan="5"
+                    Grid.Row="0"
+                    Grid.Column="0">
+
+            <TextBlock 
+                       Text="Current states of minor automats"
+                       FontSize="{Binding MediumFontSize}"
+                       HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Margin="20 0 0 0"/>
+
+        </StackPanel>
 
         <StackPanel Grid.Column="0"
                     Grid.Row="1"
@@ -119,64 +128,179 @@
 
         </StackPanel>
 
-        <StackPanel Grid.Column="5"
-                    Grid.RowSpan="2"
-                    Orientation="Vertical"
-                    Margin="10 20 10 20">
 
-            <TextBlock Text="Pick an available event and press 'Submit'"
-                       TextWrapping="WrapWholeWords"
-                       TextAlignment="Center"
-                       FontSize="{Binding SmallFontSize}"
-                       HorizontalAlignment="Center"
-                       Padding="10"/>
+        <Grid  Grid.Row="2"
+               Grid.Column="0"
+               Grid.ColumnSpan="5">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel BorderBrush="LightGray"
+                        BorderThickness="0 0 3 0">
+
+                <StackPanel>
+
+                    <TextBlock Text="Next state"
+                                   TextWrapping="WrapWholeWords"
+                                   TextAlignment="Center"
+                                   FontSize="{Binding SmallFontSize}"
+                                   HorizontalAlignment="Left"
+                                   Margin="20 0 0 5"/>
+
+                    <ComboBox HorizontalAlignment="Left"
+                                  Margin="20 0 0 0"
+                                  MinWidth="300"
+                                  ItemsSource="{Binding AvailableEvents}"
+                                  PlaceholderText="Choose an event"
+                                  PlaceholderForeground="LightGray"
+                                  SelectedValue="{Binding ChosenEventId, Mode=TwoWay}"/>
+
+                    <Button Content="Submit"
+                            HorizontalAlignment="Left"
+                            Margin="20 10 0 0"
+                            Command="{Binding SubmitEventCommand}"/>
+
+                </StackPanel>
+
+                <StackPanel VerticalAlignment="Bottom"
+                                Margin="10 20 10 20">
+
+                    <StackPanel Margin="10 0 0 15">
+
+                        <TextBlock Text="Previous state: "
+                                       FontSize="{Binding TinyFontSize}"/>
+
+                        <TextBlock Text="{Binding PreviousState}"
+                                       FontSize="{Binding TinyFontSize}"/>
+
+                    </StackPanel>
+
+                    <StackPanel Margin="10 0 0 0">
+
+                        <TextBlock Text="Recent event: "
+                                       FontSize="{Binding TinyFontSize}"/>
+
+                        <TextBlock Text="{Binding RecentEvent}"
+                                       FontSize="{Binding TinyFontSize}"/>
+
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
             
-            <ComboBox HorizontalAlignment="Center"
-                      Margin="15"
-                      MinWidth="210"
-                      ItemsSource="{Binding AvailableEvents}"
-                      PlaceholderText="Choose an event"
-                      PlaceholderForeground="LightGray"
-                      SelectedValue="{Binding ChosenEventId, Mode=TwoWay}"/>
+            <StackPanel Grid.Column="1"
+                        BorderBrush="LightGray"
+                        BorderThickness="0 0 3 0">
 
-            <Button Content="Submit"
-                    HorizontalAlignment="Center"
-                    Command="{Binding SubmitEventCommand}"/>
+                <TextBlock Text="Check blocking"
+                           TextWrapping="WrapWholeWords"
+                           TextAlignment="Center"
+                           FontSize="{Binding SmallFontSize}"
+                           HorizontalAlignment="Left"
+                           Margin="20 0 0 0"/>
 
-        </StackPanel>
+                <Button Content="Check"
+                        HorizontalAlignment="Left"
+                        Margin="20 10 0 0"
+                        Command="{Binding CheckBlockingCommand}"/>
 
-        <StackPanel Grid.Column="5"
-                    Grid.RowSpan="2"
-                    VerticalAlignment="Bottom"
-                    Margin="10 20 10 20">
+                <StackPanel Orientation="Horizontal">
 
-            <StackPanel Margin="0 0 0 15">
+                    <TextBlock Text="Status: "
+                               TextAlignment="Left"
+                               Margin="20 15 0 0"
+                               FontSize="{Binding TinyFontSize}"/>
 
-                <TextBlock Text="Previous state: "
-                           FontSize="{Binding TinyFontSize}"/>
-                
-                <TextBlock Text="{Binding PreviousState}"
-                           FontSize="{Binding TinyFontSize}"/>
+                    <TextBlock Text="{Binding BlockingStatus}"
+                               FontSize="{Binding TinyFontSize}"
+                               Foreground="{Binding BlockingTextForeground}"
+                               TextWrapping="WrapWholeWords"
+                               TextAlignment="Left"
+                               HorizontalAlignment="Left"
+                               Margin="5 15 0 0"
+                               FontWeight="Bold"/>
+
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Column="5"
+              Grid.Row="0"
+              Grid.RowSpan="3"
+              Margin="10 20 10 20">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="200"/>
+                <RowDefinition Height="190"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0"
+                        Grid.RowSpan="3">
+
+                <TextBlock Text="Find path"
+                           TextWrapping="WrapWholeWords"
+                           TextAlignment="Center"
+                           FontSize="{Binding SmallFontSize}"
+                           HorizontalAlignment="Left"
+                           Margin="20 0 0 0"/>
+
+                <ComboBox HorizontalAlignment="Left"
+                          Margin="20 10 10 0"
+                          MinWidth="300"
+                          ItemsSource="{Binding AllStates}"
+                          PlaceholderText="Start state"
+                          PlaceholderForeground="LightGray"
+                          SelectedValue="{Binding ChosenStartStateId, Mode=TwoWay}"/>
+
+                <ComboBox HorizontalAlignment="Left"
+                          Margin="20 10 10 10"
+                          MinWidth="300"
+                          ItemsSource="{Binding AllFinishStates}"
+                          PlaceholderText="Finish state"
+                          PlaceholderForeground="LightGray"
+                          SelectedValue="{Binding ChosenFinishStateId, Mode=TwoWay}"/>
+
+                <Button Content="Find"
+                        HorizontalAlignment="Left"
+                        Margin="20 0 0 0"
+                        Command="{Binding PathBetweenStatesCommand}"/>
 
             </StackPanel>
 
-            <StackPanel >
+            <ScrollViewer Grid.Row="1" Grid.RowSpan="2" BorderBrush="LightGray" BorderThickness="0 0 0 1">
+                <ListView ItemsSource="{Binding FoundPath}" HorizontalAlignment="Center"  BorderBrush="LightGray" BorderThickness="0 3 0 3">
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:Name="SingleLineDataTemplate" x:DataType="components:StatesPathNodeViewModel">
+                            <Grid Width="250" HorizontalAlignment="Center">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
 
-                <TextBlock Text="Recent event: "
-                           FontSize="{Binding TinyFontSize}"/>
+                                <TextBlock Grid.Row="0" Text="{Binding State.Id}"  Style="{ThemeResource BaseTextBlockStyle}" HorizontalAlignment="Center" Foreground="{Binding Brush}"/>
+                                <TextBlock Grid.Row="1" Text="{Binding LeavingEventId}" Style="{ThemeResource CaptionTextBlockStyle}" HorizontalAlignment="Center" Opacity=".8" Foreground="{Binding Brush}"/>
+                                <TextBlock Grid.Row="2" Text="{Binding TransitionSign}" Visibility="{Binding TransitionVisibility}" Style="{ThemeResource CaptionTextBlockStyle}" Foreground="{Binding Brush}" HorizontalAlignment="Center" FontSize="30" Opacity=".8"/>
 
-                <TextBlock Text="{Binding RecentEvent}"
-                           FontSize="{Binding TinyFontSize}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollViewer>
 
-            </StackPanel>
+        </Grid>
 
-            <Button Content="Load config file"
-                    HorizontalAlignment="Center"
-                    Command="{Binding LoadConfigCommand}"
-                    Width="200"
-                    Margin="0 30 0 0"/>
-
-        </StackPanel>
-
+        <Button Grid.Column="5"
+                Grid.Row="2"
+                Content="Load config file"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Command="{Binding LoadConfigCommand}"
+                Width="200"
+                Margin="0 15 0 10"/>
     </Grid>
 </Page>

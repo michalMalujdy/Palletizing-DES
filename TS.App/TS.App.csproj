@@ -99,10 +99,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AppStart\AutomapperConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\UiSynchronizer.cs" />
     <Compile Include="ViewModels\Common\BaseViewModel.cs" />
     <Compile Include="ViewModels\Common\BaseViewModelLocator.cs" />
+    <Compile Include="ViewModels\Components\StatesPathNodeViewModel.cs" />
+    <Compile Include="ViewModels\Components\StatesPathViewModel.cs" />
     <Compile Include="ViewModels\StatesNetViewModel.cs" />
     <Compile Include="Views\StatesNetView.xaml.cs">
       <DependentUpon>StatesNetView.xaml</DependentUpon>
@@ -142,6 +145,10 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TS.Common\TS.Common.csproj">
+      <Project>{bc66a15e-90a3-4ed4-9389-b2b6d8e6a05c}</Project>
+      <Name>TS.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TS.Core\TS.Core.csproj">
       <Project>{2fdd29e1-583d-4c9f-9b8f-2b351499d1b3}</Project>
       <Name>TS.Core</Name>
@@ -157,7 +164,9 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Extenisons\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
