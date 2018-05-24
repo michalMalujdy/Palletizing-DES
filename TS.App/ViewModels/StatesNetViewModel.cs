@@ -2,8 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using AutoMapper;
 using GalaSoft.MvvmLight.Command;
 using TS.App.ViewModels.Common;
+using TS.App.ViewModels.Components;
 using TS.Core.Models;
 using TS.Infrastructure.Services;
 
@@ -39,7 +41,7 @@ namespace TS.App.ViewModels
             }
         }
         public string ChosenFinishStateId { get; set; }
-        public ICollection<StatesPathNode> FoundPath { get; set; }
+        public ICollection<StatesPathNodeViewModel> FoundPath { get; set; }
 
         public ICollection<string> AvailableEvents =>
             _statesNetService.StatesNet?.CurrentState?.AvaliableStatesIds?.Keys;
@@ -105,7 +107,11 @@ namespace TS.App.ViewModels
 
         private void FindPathBetweenStatesClicked()
         {
-            FoundPath = _statesNetService.FindPath(ChosenStartStateId, ChosenFinishStateId)?.StatesPathCollection;
+            var foundPath = _statesNetService.FindPath(ChosenStartStateId, ChosenFinishStateId)?.StatesPathCollection;
+            var foundPathViewModel = Mapper.Map<List<StatesPathNode>, List<StatesPathNodeViewModel>>(foundPath);
+            var statesPathViewModel = new StatesPathViewModel(foundPathViewModel);
+            FoundPath = statesPathViewModel.StatesPathCollection;
+
             RaisePropertyChanged(nameof(FoundPath));
         }
 
