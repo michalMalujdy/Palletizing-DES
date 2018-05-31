@@ -27,9 +27,9 @@ namespace TS.App.ViewModels
         public string PreviousState => _statesNetService.StatesNet?.PreviousStateId ?? "none";
         public string RecentEvent => _statesNetService.StatesNet?.PreviousEventId ?? "none";
 
-        public int LargeFontSize => 55;
-        public int MediumFontSize => 40;
-        public int SmallFontSize => 30;
+        public int LargeFontSize => 50;
+        public int MediumFontSize => 32;
+        public int SmallFontSize => 28;
         public int TinyFontSize => 18;
         public int MicroFontSize => 11;
 
@@ -149,6 +149,11 @@ namespace TS.App.ViewModels
 
         private void FindPathBetweenStatesClicked()
         {
+            if (string.IsNullOrWhiteSpace(ChosenStartStateId) || string.IsNullOrWhiteSpace(ChosenFinishStateId))
+            {
+                return;
+            }
+
             var foundPath = _statesNetService.FindPath(ChosenStartStateId, ChosenFinishStateId)?.StatesPathCollection;
             var foundPathViewModel = Mapper.Map<List<StatesPathNode>, List<StatesPathNodeViewModel>>(foundPath);
             var statesPathViewModel = new StatesPathViewModel(foundPathViewModel);

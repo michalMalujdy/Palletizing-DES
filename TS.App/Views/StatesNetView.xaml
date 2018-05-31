@@ -8,10 +8,10 @@
     xmlns:models="using:TS.Core.Models"
     xmlns:components="using:TS.App.ViewModels.Components"
     mc:Ignorable="d"
-    d:DesignWidth="1280"
-    d:DesignHeight="720"
-    MinWidth="1280"
-    MinHeight="720">
+    d:DesignWidth="1024"
+    d:DesignHeight="600"
+    MinWidth="1024"
+    MinHeight="600">
 
     <Page.DataContext>
         <Binding Path="StatesNetViewModel" Source="{StaticResource ViewModelLocator}"/>
@@ -24,7 +24,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2.5*"/>
         </Grid.ColumnDefinitions>
         
         <Grid.RowDefinitions>
@@ -247,18 +247,18 @@
                            FontSize="{Binding SmallFontSize}"
                            HorizontalAlignment="Left"
                            Margin="20 0 0 0"/>
-
-                <ComboBox HorizontalAlignment="Left"
+                
+                <ComboBox HorizontalAlignment="Stretch"
+                          HorizontalContentAlignment="Stretch"
                           Margin="20 10 10 0"
-                          MinWidth="300"
                           ItemsSource="{Binding AllStates}"
                           PlaceholderText="Start state"
                           PlaceholderForeground="LightGray"
                           SelectedValue="{Binding ChosenStartStateId, Mode=TwoWay}"/>
 
-                <ComboBox HorizontalAlignment="Left"
+                <ComboBox HorizontalAlignment="Stretch"
                           Margin="20 10 10 10"
-                          MinWidth="300"
+                          MinWidth="285"
                           ItemsSource="{Binding AllFinishStates}"
                           PlaceholderText="Finish state"
                           PlaceholderForeground="LightGray"
@@ -297,10 +297,11 @@
         <Button Grid.Column="5"
                 Grid.Row="2"
                 Content="Load config file"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"
                 Command="{Binding LoadConfigCommand}"
-                Width="200"
-                Margin="0 15 0 10"/>
+                MinWidth="200"
+                Height="40"
+                Margin="20 15 20 10"/>
     </Grid>
 </Page>
