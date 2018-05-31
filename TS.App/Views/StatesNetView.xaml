@@ -150,8 +150,8 @@
                                    HorizontalAlignment="Left"
                                    Margin="20 0 0 5"/>
 
-                    <ComboBox HorizontalAlignment="Left"
-                                  Margin="20 0 0 0"
+                    <ComboBox HorizontalAlignment="Stretch"
+                                  Margin="20 10 20 0"
                                   MinWidth="300"
                                   ItemsSource="{Binding AvailableEvents}"
                                   PlaceholderText="Choose an event"
@@ -159,8 +159,8 @@
                                   SelectedValue="{Binding ChosenEventId, Mode=TwoWay}"/>
 
                     <Button Content="Submit"
-                            HorizontalAlignment="Left"
-                            Margin="20 10 0 0"
+                            HorizontalAlignment="Stretch"
+                            Margin="20 10 20 0"
                             Command="{Binding SubmitEventCommand}"/>
 
                 </StackPanel>
@@ -246,18 +246,18 @@
                            TextAlignment="Center"
                            FontSize="{Binding SmallFontSize}"
                            HorizontalAlignment="Left"
-                           Margin="20 0 0 0"/>
+                           Margin="10 0 0 0"/>
                 
                 <ComboBox HorizontalAlignment="Stretch"
                           HorizontalContentAlignment="Stretch"
-                          Margin="20 10 10 0"
+                          Margin="10 10 10 0"
                           ItemsSource="{Binding AllStates}"
                           PlaceholderText="Start state"
                           PlaceholderForeground="LightGray"
                           SelectedValue="{Binding ChosenStartStateId, Mode=TwoWay}"/>
 
                 <ComboBox HorizontalAlignment="Stretch"
-                          Margin="20 10 10 10"
+                          Margin="10 10 10 10"
                           MinWidth="285"
                           ItemsSource="{Binding AllFinishStates}"
                           PlaceholderText="Finish state"
@@ -265,8 +265,8 @@
                           SelectedValue="{Binding ChosenFinishStateId, Mode=TwoWay}"/>
 
                 <Button Content="Find"
-                        HorizontalAlignment="Left"
-                        Margin="20 0 0 0"
+                        HorizontalAlignment="Stretch"
+                        Margin="10 0 10 0"
                         Command="{Binding PathBetweenStatesCommand}"/>
 
             </StackPanel>

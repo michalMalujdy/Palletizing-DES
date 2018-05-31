@@ -111,7 +111,7 @@ namespace TS.App.ViewModels
             CheckBlockingCommand = new RelayCommand(CheckBlockingClicked);
 
             _statesNetService.Initialize(_jsonConfigService.GetDefault());
-            Refresh();
+            RefreshAll();
         }
 
         public void RefreshAll()
