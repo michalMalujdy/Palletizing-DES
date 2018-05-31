@@ -41,6 +41,9 @@ namespace TS.App.ViewModels
 
             SubmitEventCommand = new RelayCommand(SubmitEventButtonClicked);
             LoadConfigCommand = new RelayCommand(() => OnLoadConfigClicked());
+
+            _statesNetService.Initialize(_jsonConfigService.GetDefault());
+            Refresh();
         }
 
         public void Refresh()
@@ -69,9 +72,8 @@ namespace TS.App.ViewModels
 
         private async Task OnLoadConfigClicked()
         {
-            var statesNetJson = await _jsonConfigService.ReadConfigFile();
+            var statesNetJson = await _jsonConfigService.PickConfigFile();
             _statesNetService.Initialize(statesNetJson);
-
             Refresh();
         }
     }
