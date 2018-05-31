@@ -109,6 +109,9 @@ namespace TS.App.ViewModels
             LoadConfigCommand = new RelayCommand(() => OnLoadConfigClicked());
             PathBetweenStatesCommand = new RelayCommand(FindPathBetweenStatesClicked);
             CheckBlockingCommand = new RelayCommand(CheckBlockingClicked);
+
+            _statesNetService.Initialize(_jsonConfigService.GetDefault());
+            Refresh();
         }
 
         public void RefreshAll()
@@ -141,7 +144,7 @@ namespace TS.App.ViewModels
 
         private async Task OnLoadConfigClicked()
         {
-            var statesNetJson = await _jsonConfigService.ReadConfigFile();
+            var statesNetJson = await _jsonConfigService.PickConfigFile();
             _statesNetService.Initialize(statesNetJson);
 
             RefreshAll();
